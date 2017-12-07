@@ -1,0 +1,66 @@
+<!doctype html>
+<html><head>
+  <meta charset="utf-8">
+  <title>JavaScript Test</title>
+</head><body>
+  <h1>JavaScript Test</h1>
+  <script>
+    (function(){
+      /*
+      for (var i = 0, j = 0; i < 10; i++, j++) {
+        console.log(i);
+        console.log(j);
+      }
+      var c = 100;
+      var a = (1, "foo");  // a === "foo"
+      var b = (false, c=0);
+      console.log(a);
+      console.log(b);
+      console.log(c);
+    */
+
+h = function(b) { // href==uri
+    var a, c = "";
+    -1 < (a = b.indexOf("#")) && (c = b.substring(a), b = b.substring(0, a),
+    -1 < (a = c.indexOf("?")) && (b += c.substring(a), c = c.substring(0, a)));
+    console.log("url: "+b);
+    console.log("author: "+c);
+    return {
+        url: b,
+        anchor: c
+    }
+}
+
+var g = function(b) {
+    var a = b.url
+      , c = "";
+    0 <= a.indexOf("?") && (c = a.substring(a.indexOf("?")));
+    (c = cacheMapping[a.replace(c, "")]) ? (history.pushState(a, "", a),
+    c.trigger("hpjax:cached", b),
+    f(c, b)) : k(b, !0)
+}
+
+var k = function(d, k) {
+  var g = d.url
+    , h = ""
+    , q = "?hpjax\x3d1";
+  0 <= g.indexOf("?") && (h = g.substring(g.indexOf("?")), q = "\x26hpjax\x3d1");
+  var l = a.extend(!0, {}, a.ajaxSettings, e);
+  l.url = l.history_url = g;
+  l.url += q;
+  l.beforeSend = function(b, a) {
+      "GET" !== a.type && (a.timeout = 0);
+      b.setRequestHeader("X-HPJAX", "true");
+      0 < a.timeout && (c = setTimeout(function() {
+          location.href = a.history_url
+      }, a.timeout),
+      a.timeout = 0)
+  };
+};
+
+result = h("https://service.cloud.teu.ac.jp/portal/lecture#lecture-369");
+console.log(g(result));
+
+    })();
+  </script>
+</body></html>
