@@ -5,7 +5,7 @@ getChar(){
   result=`echo ${1} | tr ',' '\n' | cut -d ' ' -f${2}-${3} | head -${4} | tail -1`
   echo $result | tr -d '\n'
   echo -en '  \t'
-  echo $result | tr -d ' ' | tr [a-z] [A-Z] | sed 's/.*/ibase=16; &/g' | bc
+  echo $result | awk '{print $4$3$2$1}' | tr [a-z] [A-Z] | sed 's/.*/ibase=16; &/g' | bc
 }
 
 for i in $(ls *.bmp)
