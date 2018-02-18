@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    {% block header %}
+      <title>My Webpage</title>
+    {% endblock %}
+    </head>
+    <body>
+        {# % set navigation = [] % #}
+        {% if navigation|length > 0 %}
+          <ul id="navigation">
+          {% for item in navigation %}
+            <li><a href="{{ item.href }}">{{ item.caption }}</a></li>
+          {% endfor %}
+          </ul>
+        {% endif %}
+
+        <h1>My Webpage</h1>
+        {% set a_variable = "What's up?" %}
+        {{ a_variable }}
+
+        <ul>
+          <li>self: {{ _self }}
+          <li>context: {{ _context }}
+          <li>charset: {{ _charset }}
+        </ul>
+
+        {% for i in range(0, 3) %}
+          {{ i }} 回目のHello <br>
+        {% endfor %}
+
+        {% set boxes = ['orange', 'apple', 'banana'] %}
+        {% for box in boxes %}
+            {{ include('render_box.html') }}
+        {% endfor %}
+
+        {{ include('notif.html') }}
+    </body>
+</html>
