@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 import feedparser
+import os
 import sys
+import urllib.request
 from feeder import Feeder
 
 argv=sys.argv
@@ -13,8 +15,20 @@ def has_argv(check_name):
             return True
     return False
 
+def download(uri, file_name):
+    urllib.request.urlretrieve(uri, file_name)
+
 def main():
-    saved_feed = feedparser.parse(r'feed.xml')
+    try:
+        os.remove('feed_old.xml')
+        os.rename('feed.xml', 'feed_old.xml')
+        download(uri='https://inside.teu.ac.jp/feed/', file_name='feed.xml')
+    except Exception as e:
+        with open('console.log', mode='a', encoding='utf-8') as fd:
+            fd.write(str(e) + '\n')
+        sys.exit(1)
+
+    saved_feed = feedparser.parse(r'feed_old.xml')
     if( has_argv(check_name="--offline") ):
         print("[info] Offline mode is enabled. Not downlaod feed from remote.")
         feeder = Feeder()
@@ -22,8 +36,7 @@ def main():
         feeder.show(items=['title', 'uri'])
         sys.exit(0)
 
-    # fresh_feed = feedparser.parse('https://inside.teu.ac.jp/feed/')
-    fresh_feed = feedparser.parse(r'feed2.xml')
+    fresh_feed = feedparser.parse(r'feed_old.xml')
     if(fresh_feed == saved_feed):
         print("[info] Update was not found.")
         sys.exit(0)
