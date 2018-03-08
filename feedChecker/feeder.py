@@ -26,8 +26,16 @@ class Feeder:
         return self.entries
 
     def show(self, items=[]):
-        for i in self.entries:
+        for entry in self.entries:
             for key in items:
-                print(i[key])
-            print("-----")
+                print(entry[key])
+            print("--------------------")
 
+    # Fetch new pattern [added:: target - base]
+    def fetchDiff(target, base):
+        for t in target:
+            for b in base:
+                if(t==b):
+                    break
+            else:
+                print("New Content: \n\t" + str(t))
