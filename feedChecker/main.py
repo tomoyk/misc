@@ -17,6 +17,9 @@ def main():
     saved_feed = feedparser.parse(r'feed.xml')
     if( has_argv(check_name="--offline") ):
         print("[info] Offline mode is enabled. Not downlaod feed from remote.")
+        feeder = Feeder()
+        feeder.set(parsed_feed=saved_feed)
+        feeder.show(items=['title', 'uri'])
         sys.exit(0)
 
     # fresh_feed = feedparser.parse('https://inside.teu.ac.jp/feed/')
@@ -29,10 +32,11 @@ def main():
     feeder['fresh'].set(parsed_feed=fresh_feed)
     feeder['saved'].set(parsed_feed=saved_feed)
 
-    # feeder = Feeder()
-    # feeder.show(items=['title', 'author'])
-
-    Feeder.fetchDiff(target=feeder['fresh'].get(), base=feeder['saved'].get())
+    new_entries = Feeder.fetch_diff(target=feeder['fresh'].get(), base=feeder['saved'].get())
+    # debug:: print(str(new_entries))
+    for entry in new_entries:
+        body = entry['title'] + ' (' + entry['date'] +  ')\n' + entry['uri'] + '\n'
+        Feeder.notify_slack(message=body)
 
 if __name__ == '__main__':
     main()

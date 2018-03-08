@@ -1,4 +1,5 @@
 import datetime
+import os
 
 class Feeder:
     def __init__(self):
@@ -32,10 +33,23 @@ class Feeder:
             print("--------------------")
 
     # Fetch new pattern [added:: target - base]
-    def fetchDiff(target, base):
+    @staticmethod
+    def fetch_diff(target, base):
+        added_entry = []
         for t in target:
             for b in base:
                 if(t==b):
                     break
             else:
-                print("New Content: \n\t" + str(t))
+                # debug:: print("New Content: \n\t" + str(t))
+                added_entry.append(t)
+        return added_entry
+
+    @staticmethod
+    def notify_slack(message):
+        TOKEN   = '12345'
+        USER    = 'Feeder'
+        CHANNEL = 'feeder'
+
+        os.system('curl -s -XPOST -d token="' + TOKEN + '" -d channel="#' + CHANNEL + '" -d text="' + message + '" -d username="' + USER + '    " https://slack.com/api/chat.postMessage')
+
