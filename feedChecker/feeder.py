@@ -3,9 +3,9 @@ import datetime
 class Feeder:
     def __init__(self):
         self.entries = []
-    
-    def set(self, parsed_xml):
-        for entry in parsed_xml['entries']:
+
+    def set(self, parsed_feed):
+        for entry in parsed_feed['entries']:
             tmp = {}
 
             # Convert "Tue, 06 Mar 2018 05:20:30 +0000" => Type(Date)
@@ -17,7 +17,7 @@ class Feeder:
             entry_uri = entry['links'][0]['href']
             tmp['uri'] = entry_uri.replace("//inside.teu.ac.jp/", "//service.cloud.teu.ac.jp/inside2/")
 
-            tmp['title'] = entry['title'] 
+            tmp['title'] = entry['title']
             tmp['author'] = entry['author']
             tmp['content'] = entry['content'][0]['value']
             self.entries.append(tmp)
@@ -25,7 +25,7 @@ class Feeder:
     def get(self):
         return self.entries
 
-    def print(self, items=[]):
+    def show(self, items=[]):
         for i in self.entries:
             for key in items:
                 print(i[key])
