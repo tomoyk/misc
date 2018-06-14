@@ -19,7 +19,7 @@ else
   test $DEBUG -gt 0 && echo "[DEBUG] Fail to access"
 
   ### Post to Slack
-  TOKEN='xoxp-3987726559-181496154662-194463962320-f8bb0d513d333cf7e486096e07321e7b'
+  TOKEN=''
   USER='SiteChecker'
   CHANNEL='sportsfes'
   MESSAGE="[Error:$RESPONSE_CODE] Fail to access $URL at $DATE"
