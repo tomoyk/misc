@@ -19,4 +19,8 @@ xの値が大きいと桁落ちが生じる。これを避けるには分子の�
 
 <img src="https://latex.codecogs.com/gif.latex?=\frac{1}{\sqrt{x+1}+\sqrt{x}}" />
 
-### 
+### 丸め誤差
+
+**rounding error**
+
+実数を有限の桁数の2進数で表現するために生じる。
